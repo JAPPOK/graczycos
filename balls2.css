@@ -115,11 +115,26 @@ body {
     width: 30px;
     height: 30px;
     background-color: #0f0;
-    animation: fallAnimation 2s linear forwards;
+    animation: fallAnimation 2s linear forwards; /* Zwiększenie czasu animacji do 3 sekund */
     z-index: 2;
 }
 
 @keyframes fallAnimation {
+    from { transform: translateY(-100px); opacity: 1; }
+    to { transform: translateY(100vh); opacity: 0; }
+}
+
+.hold {
+    background-color: rgba(255, 0, 0, 0.5);
+    height: 100px;
+    width: 100%;
+    position: absolute;
+    bottom: 100%;
+    animation: fallHoldAnimation 2s linear forwards; 
+    z-index: 2;
+}
+
+@keyframes fallHoldAnimation {
     from { transform: translateY(-100px); opacity: 1; }
     to { transform: translateY(100vh); opacity: 0; }
 }
