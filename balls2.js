@@ -11,7 +11,6 @@ const keyMapping = {
     'k': 'trackK',
 };
 
-// Obsługa klawiszy do trafienia
 document.addEventListener('keydown', (event) => {
     const targetId = keyMapping[event.key.toLowerCase()];
     if (targetId) {
@@ -27,7 +26,7 @@ function checkHit(trackId) {
         const squareRect = square.getBoundingClientRect();
         const trackRect = track.querySelector('.target').getBoundingClientRect();
 
-        const tolerance = 30;  // Zwiększenie tolerancji, aby łatwiej trafić
+        const tolerance = 30;
 
         if (
             squareRect.bottom >= trackRect.top - tolerance &&
@@ -46,9 +45,9 @@ function checkHit(trackId) {
 
 function startGame() {
     setInterval(() => {
-        const randomTrack = getRandomTrack(); // Wybierz losowy tor
-        createFallingSquare(randomTrack); // Dodaj klocek
-    }, 1000); // Nowy klocek co sekundę
+        const randomTrack = getRandomTrack();
+        createFallingSquare(randomTrack);
+    }, 300);
 }
 
 function createFallingSquare(track) {
