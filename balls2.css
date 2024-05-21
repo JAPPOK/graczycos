@@ -115,8 +115,7 @@ body {
     width: 30px;
     height: 30px;
     background-color: #0f0;
-    border-radius: 50%;
-    animation: fallAnimation 3s linear forwards; /* Zwiększenie czasu animacji do 3 sekund */
+    animation: fallAnimation 2s linear forwards;
     z-index: 2;
 }
 
