@@ -115,8 +115,8 @@ body {
     width: 30px;
     height: 30px;
     background-color: #0f0;
-    animation: fallAnimation 2s linear forwards; /* Zwiększenie czasu animacji do 3 sekund */
-    z-index: 2;
+    animation: fallAnimation 2s linear forwards;
+    z-index: 1;
 }
 
 @keyframes fallAnimation {
@@ -131,7 +131,7 @@ body {
     position: absolute;
     bottom: 100%;
     animation: fallHoldAnimation 2s linear forwards; 
-    z-index: 2;
+    z-index: 1;
 }
 
 @keyframes fallHoldAnimation {
@@ -160,4 +160,7 @@ body {
 header {
     position: absolute;
     margin-bottom: 850px;
+}
+.hidden {
+    display: none;
 }
