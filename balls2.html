@@ -6,7 +6,13 @@
     <link rel="stylesheet" href="balls2.css">
 </head>
 <body>
-    <div class="game-board" id="gameBoard">
+    <div class="difficulty-buttons" id="difficultyButtons">
+        <button onclick="selectDifficulty('easy')">Easy</button>
+        <button onclick="selectDifficulty('normal')">Normal</button>
+        <button onclick="selectDifficulty('hard')">Hard</button>
+    </div>
+
+    <div class="game-board hidden" id="gameBoard">
         <div class="track" id="trackA">
             <div class="target" id="targetA">A</div>
         </div>
@@ -20,9 +26,11 @@
             <div class="target" id="targetK">K</div>
         </div>
     </div>
-    <p>Punkty: <span id="score">0</span></p>
-    <p>Combo: <span id="combo">0</span></p>
-    <p>Ostatnie kliknięcie: <span id="lastHit">Brak</span></p>
+    <p class="hidden" id="scoreBoard">
+        Punkty: <span id="score">0</span> <br>
+        Combo: <span id="combo">0</span> <br>
+        Ostatnie kliknięcie: <span id="lastHit">Brak</span>
+    </p>
 
     <script src="balls2.js"></script>
 </body>
