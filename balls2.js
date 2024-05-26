@@ -20,7 +20,6 @@ const pointsMapping = {
 };
 
 const tolerance = 50;
-
 const minHoldDuration = 200;
 const maxHoldDuration = 1000;
 
@@ -49,6 +48,7 @@ function startHold(trackId) {
     const holdSquare = track.querySelector('.hold.active');
     if (holdSquare) {
         holdSquare.classList.add('holding');
+        holdSquare.setAttribute('clicked', 'true');
         holdActive = true;
         combo++;
         updateCombo();
@@ -56,7 +56,7 @@ function startHold(trackId) {
         const holdDuration = getRandomHoldDuration();
 
         setTimeout(() => {
-            if (holdActive && !holdSquare.hasAttribute('clicked')) {
+            if (holdActive && holdSquare.hasAttribute('clicked')) {
                 clearCombo();
                 updateLastHit('MISS');
                 holdSquare.remove();
@@ -70,7 +70,7 @@ function endHold(trackId) {
     const track = document.getElementById(trackId);
     const holdSquare = track.querySelector('.hold.active');
     if (holdSquare) {
-        if (!holdSquare.hasAttribute('clicked')) {
+        if (holdSquare.hasAttribute('clicked')) {
             let hitType = 'MISS';
             let points = 0;
 
@@ -106,10 +106,9 @@ function endHold(trackId) {
 function checkHit(trackId) {
     const track = document.getElementById(trackId);
     const squares = track.querySelectorAll('.falling, .hold');
-
     let hitType = 'MISS';
 
-    squares.forEach((square) => {
+    squares.forEach((square, index) => {
         if (square.classList.contains('falling') && !square.hasAttribute('clicked')) {
             const squareRect = square.getBoundingClientRect();
             const trackRect = track.querySelector('.target').getBoundingClientRect();
@@ -131,22 +130,30 @@ function checkHit(trackId) {
                 }
             }
         } else if (square.classList.contains('hold') && !square.hasAttribute('clicked')) {
-            clearCombo();
-            updateLastHit('MISS');
-            square.remove();
+            if (index > 0 && squares[index - 1].classList.contains('falling') && !squares[index - 1].hasAttribute('clicked')) {
+                clearCombo();
+                updateLastHit('MISS');
+                square.remove();
+            }
         }
     });
 
     if (hitType === 'MISS' && !holdActive) {
-        clearCombo();
-        updateLastHit('MISS');
+        const holdSquares = track.querySelectorAll('.hold.active');
+        holdSquares.forEach((holdSquare) => {
+            if (!holdSquare.hasAttribute('clicked')) {
+                clearCombo();
+                updateLastHit('MISS');
+                holdSquare.remove();
+            }
+        });
     }
 
     return hitType;
 }
 
 function calculateHitType(squareBottom, trackTop, tolerance) {
-    const holdTolerance = tolerance 
+    const holdTolerance = tolerance;
 
     if (squareBottom >= trackTop - holdTolerance && squareBottom <= trackTop + holdTolerance) {
         if (Math.abs(squareBottom - trackTop) <= holdTolerance / 3) {
@@ -164,7 +171,29 @@ function getRandomHoldDuration() {
     return Math.floor(Math.random() * (maxHoldDuration - minHoldDuration + 1)) + minHoldDuration;
 }
 
-function startGame() {
+function selectDifficulty(difficulty) {
+    document.getElementById('difficultyButtons').classList.add('hidden');
+    document.getElementById('gameBoard').classList.remove('hidden');
+    document.getElementById('scoreBoard').classList.remove('hidden');
+    startGame(difficulty);
+}
+
+function startGame(difficulty) {
+    let interval;
+    switch (difficulty) {
+        case 'easy':
+            interval = 1000;
+            break;
+        case 'normal':
+            interval = 500;
+            break;
+        case 'hard':
+            interval = 200;
+            break;
+        default:
+            interval = 1000;
+    }
+
     setInterval(() => {
         const randomTrack = getRandomTrack();
         const blockType = Math.random() < 0.5 ? 'falling' : 'hold';
@@ -173,7 +202,7 @@ function startGame() {
         } else {
             createHoldSquare(randomTrack);
         }
-    }, 1000);
+    }, interval);
 }
 
 function createFallingSquare(track) {
@@ -235,4 +264,7 @@ function clearCombo() {
     updateCombo();
 }
 
-startGame();
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('gameBoard').classList.add('hidden');
+    document.getElementById('scoreBoard').classList.add('hidden');
+});
