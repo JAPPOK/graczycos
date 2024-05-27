@@ -1,9 +1,13 @@
+*{
+    user-select: none;
+}
+
 html, body {
     margin: 0;
     padding: 0;
     height: 100%;
     width: 100%;
-    background-color: #000;
+    background-color: #0a0a0a;
     color: #fff;
     font-family: 'Arial', sans-serif;
 }
@@ -15,13 +19,37 @@ body {
     overflow: hidden;
 }
 
+button{
+    height: 100px;
+    width: 160px;
+    margin: 50px;
+    background-color: #0a0a0a;
+    border: 2px solid #0f0;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+    color:#0f0;
+    font-family: "Bebas Neue", sans-serif;
+}
+
+.buttons{
+    position:absolute;
+    margin-left: 120px; 
+    margin-right: 120px;
+}
+
+h1{
+    color:#0f0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 180px;
+    margin-top: -200px;
+}
+
 .game-board {
     position: relative;
     width: 40vw;
     height: 80vh;
     display: flex;
     justify-content: space-between;
-    background-color: #000;
+    background-color: #0a0a0a;
     border: 2px solid #0f0;
     box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
     animation: game-board-entry 1s ease-out;
@@ -92,19 +120,6 @@ body {
     border-radius: 50%;
     z-index: -1;
     pointer-events: none;
-    animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
 }
 
 .falling {
