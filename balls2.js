@@ -185,13 +185,11 @@ function startGame(difficulty) {
             interval = 1000;
             break;
         case 'normal':
-            interval = 500;
+            interval = 650;
             break;
         case 'hard':
-            interval = 200;
+            interval = 350;
             break;
-        default:
-            interval = 1000;
     }
 
     setInterval(() => {
