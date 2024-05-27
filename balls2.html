@@ -4,32 +4,38 @@
     <meta charset="UTF-8">
     <title>Gra Rytmiczna</title>
     <link rel="stylesheet" href="balls2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="difficulty-buttons" id="difficultyButtons">
-        <button onclick="selectDifficulty('easy')">Easy</button>
-        <button onclick="selectDifficulty('normal')">Normal</button>
-        <button onclick="selectDifficulty('hard')">Hard</button>
+        <h1>CHOOSE DIFFICULTY</h1>
+        <div class="buttons">
+        <button onclick="selectDifficulty('easy')">EASY</button>
+        <button onclick="selectDifficulty('normal')">NORMAL</button>
+        <button onclick="selectDifficulty('hard')">HARD</button>
+        </div>
     </div>
 
     <div class="game-board hidden" id="gameBoard">
         <div class="track" id="trackA">
-            <div class="target" id="targetA">A</div>
+            <div class="target" id="targetA"><p>A</p></div>
         </div>
         <div class="track" id="trackS">
-            <div class="target" id="targetS">S</div>
+            <div class="target" id="targetS"><p>S</p></div>
         </div>
         <div class="track" id="trackJ">
-            <div class="target" id="targetJ">J</div>
+            <div class="target" id="targetJ"><p>J</p></div>
         </div>
         <div class="track" id="trackK">
-            <div class="target" id="targetK">K</div>
+            <div class="target" id="targetK"><p>K</p></div>
         </div>
     </div>
     <p class="hidden" id="scoreBoard">
-        Punkty: <span id="score">0</span> <br>
+        Points: <span id="score">0</span> <br>
         Combo: <span id="combo">0</span> <br>
-        Ostatnie kliknięcie: <span id="lastHit">Brak</span>
+        Last hit: <span id="lastHit">Brak</span>
     </p>
 
     <script src="balls2.js"></script>
