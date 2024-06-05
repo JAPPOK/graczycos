@@ -22,7 +22,6 @@ const pointsMapping = {
 const tolerance = 50;
 const minHoldDuration = 200;
 const maxHoldDuration = 1000;
-
 document.addEventListener('keydown', (event) => {
     const trackId = keyMapping[event.key.toLowerCase()];
     if (trackId) {
@@ -98,17 +97,18 @@ function endHold(trackId) {
                 updateLastHit('MISS');
             }
         }
-        holdSquare.remove();
+        holdSquare.removeAttribute('clicked');
+        holdSquare.classList.remove('holding', 'active');
         holdActive = false;
     }
 }
 
 function checkHit(trackId) {
     const track = document.getElementById(trackId);
-    const squares = track.querySelectorAll('.falling, .hold');
+    const squares = track.querySelectorAll('.falling, .hold.active');
     let hitType = 'MISS';
 
-    squares.forEach((square, index) => {
+    squares.forEach((square) => {
         if (square.classList.contains('falling') && !square.hasAttribute('clicked')) {
             const squareRect = square.getBoundingClientRect();
             const trackRect = track.querySelector('.target').getBoundingClientRect();
@@ -129,25 +129,18 @@ function checkHit(trackId) {
                     square.remove();
                 }
             }
-        } else if (square.classList.contains('hold') && !square.hasAttribute('clicked')) {
-            if (index > 0 && squares[index - 1].classList.contains('falling') && !squares[index - 1].hasAttribute('clicked')) {
-                clearCombo();
-                updateLastHit('MISS');
-                square.remove();
-            }
         }
     });
 
-    if (hitType === 'MISS' && !holdActive) {
-        const holdSquares = track.querySelectorAll('.hold.active');
-        holdSquares.forEach((holdSquare) => {
-            if (!holdSquare.hasAttribute('clicked')) {
-                clearCombo();
-                updateLastHit('MISS');
-                holdSquare.remove();
-            }
-        });
-    }
+    // Handle hold elements independently
+    const holdSquares = track.querySelectorAll('.hold.active');
+    holdSquares.forEach((holdSquare) => {
+        if (!holdSquare.hasAttribute('clicked')) {
+            clearCombo();
+            updateLastHit('MISS');
+            holdSquare.remove();
+        }
+    });
 
     return hitType;
 }
@@ -171,6 +164,9 @@ function getRandomHoldDuration() {
     return Math.floor(Math.random() * (maxHoldDuration - minHoldDuration + 1)) + minHoldDuration;
 }
 
+let fallAnimationClass = '';
+let fallHoldAnimationClass = '';
+
 function selectDifficulty(difficulty) {
     document.getElementById('difficultyButtons').classList.add('hidden');
     document.getElementById('gameBoard').classList.remove('hidden');
@@ -183,12 +179,18 @@ function startGame(difficulty) {
     switch (difficulty) {
         case 'easy':
             interval = 1000;
+            fallAnimationClass = 'fallAnimation-easy';
+            fallHoldAnimationClass = 'fallHoldAnimation-easy';
             break;
         case 'normal':
             interval = 650;
+            fallAnimationClass = 'fallAnimation-normal';
+            fallHoldAnimationClass = 'fallHoldAnimation-normal';
             break;
         case 'hard':
             interval = 350;
+            fallAnimationClass = 'fallAnimation-hard';
+            fallHoldAnimationClass = 'fallHoldAnimation-hard';
             break;
     }
 
@@ -205,7 +207,7 @@ function startGame(difficulty) {
 
 function createFallingSquare(track) {
     const square = document.createElement('div');
-    square.className = 'falling';
+    square.className = `falling ${fallAnimationClass}`;
     track.appendChild(square);
 
     square.addEventListener('animationend', () => {
@@ -219,7 +221,7 @@ function createFallingSquare(track) {
 
 function createHoldSquare(track) {
     const square = document.createElement('div');
-    square.className = 'hold active';
+    square.className = `hold active ${fallHoldAnimationClass}`;
     square.dataset.startTime = Date.now();
     track.appendChild(square);
 
