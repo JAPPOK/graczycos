@@ -185,3 +185,27 @@ header {
     color:#fff;
     font-family: "Bebas Neue", sans-serif;
 }
+
+.fallAnimation-easy {
+    animation: fallAnimation 2s linear forwards;
+}
+
+.fallAnimation-normal {
+    animation: fallAnimation 1.5s linear forwards;
+}
+
+.fallAnimation-hard {
+    animation: fallAnimation 1s linear forwards;
+}
+
+.fallHoldAnimation-easy {
+    animation: fallHoldAnimation 2s linear forwards;
+}
+
+.fallHoldAnimation-normal {
+    animation: fallHoldAnimation 1.5s linear forwards;
+}
+
+.fallHoldAnimation-hard {
+    animation: fallHoldAnimation 1s linear forwards;
+}
