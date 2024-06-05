@@ -132,7 +132,6 @@ function checkHit(trackId) {
         }
     });
 
-    // Handle hold elements independently
     const holdSquares = track.querySelectorAll('.hold.active');
     holdSquares.forEach((holdSquare) => {
         if (!holdSquare.hasAttribute('clicked')) {
