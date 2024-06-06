@@ -24,6 +24,10 @@ const minHoldDuration = 200;
 const maxHoldDuration = 1000;
 document.addEventListener('keydown', (event) => {
     const trackId = keyMapping[event.key.toLowerCase()];
+    const button = document.getElementById("target" + event.key.toUpperCase());
+    if(button) {
+        button.style.backgroundColor = "rgb(197, 238, 197)";
+    }
     if (trackId) {
         const track = document.getElementById(trackId);
         const holdSquare = track.querySelector('.hold.active');
@@ -37,6 +41,11 @@ document.addEventListener('keydown', (event) => {
 
 document.addEventListener('keyup', (event) => {
     const trackId = keyMapping[event.key.toLowerCase()];
+    console.log("target" + event.key.toUpperCase())
+    const button = document.getElementById("target" + event.key.toUpperCase());
+    if(button) {
+        button.style.backgroundColor = "rgb(0, 255, 0)";
+    }
     if (trackId && holdActive) {
         endHold(trackId);
     }
